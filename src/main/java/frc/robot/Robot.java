@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.hoodSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -54,17 +53,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     if (driverJoystick.getRawButton(1)) {
       if (RobotContainer.hood.getsensor()) {
-        RobotContainer.hood.setHoodAngle(30);
+        RobotContainer.hood.setHoodAngle(50);
       } else if (driverJoystick.getRawButton(2)) {
         if (RobotContainer.hood.getsensor()) {
           RobotContainer.hood.setHoodAngle(80);
         }
-      } else if (driverJoystick.getRawButton(3)) {
-        if (RobotContainer.hood.getsensor()) {
-          RobotContainer.hood.setHoodAngle(110);
-        }
       } else {
-        RobotContainer.hood.setHoodAngle(0);
+        RobotContainer.hood.setHoodAngle(30);
       }
     }
 

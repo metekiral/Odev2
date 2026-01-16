@@ -8,14 +8,11 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.PIDOutput_PIDOutputModeValue;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -43,28 +40,32 @@ public class hoodSubsystem extends SubsystemBase {
                 .withInverted(InvertedValue.Clockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake))
         .withCurrentLimits(
-            new CurrentLimitsConfigs()       
-              .withStatorCurrentLimit(Amps.of(120))
-              .withStatorCurrentLimitEnable(true))
-            .withFeedback(new FeedbackConfigs()
-              .withSensorToMechanismRatio(20.0))
-            .withMotionMagic(MotionMagicConfig)
-            .withSlot0(PIDConfig);
+            new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(Amps.of(120))
+                .withStatorCurrentLimitEnable(true))
+        .withFeedback(new FeedbackConfigs()
+            .withSensorToMechanismRatio(20.0))
+        .withMotionMagic(MotionMagicConfig)
+        .withSlot0(PIDConfig);
 
     hoodMotor.getConfigurator().apply(talonFXConfigs);
     hood2Motor.getConfigurator().apply(talonFXConfigs);
 
-   hood2Motor.setControl(new Follower(hoodMotor.getDeviceID(), false));
+    hood2Motor.setControl(new Follower(hoodMotor.getDeviceID(), false));
   }
+
   public boolean getsensor() {
     return m_input.get();
   }
 
-  @Override
-  public void setHoodAngle (double angle) {
+  public void setHoodAngle(double angle) {
     double finalAngle = MathUtil.clamp(angle, 0, 80);
 
     hoodMotor.setControl(request.withPosition(finalAngle));
     SmartDashboard.putNumber("Hood Position", hoodMotor.getPosition().getValueAsDouble());
+  }
+
+  @Override
+  public void periodic() {
   }
 }
