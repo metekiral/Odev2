@@ -51,17 +51,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    if (driverJoystick.getRawButton(1)) {
-      if (RobotContainer.hood.getsensor()) {
+    if (RobotContainer.hood.getsensor()){
+      if(driverJoystick.getRawButton(1)){
         RobotContainer.hood.setHoodAngle(50);
-      } else if (driverJoystick.getRawButton(2)) {
-        if (RobotContainer.hood.getsensor()) {
-          RobotContainer.hood.setHoodAngle(80);
-        }
-      } else {
-        RobotContainer.hood.setHoodAngle(30);
+      }else if(driverJoystick.getRawButton(2)){
+        RobotContainer.hood.setHoodAngle(80);
       }
+    }else{
+      RobotContainer.hood.setHoodAngle(30);
     }
-
   }
 }
